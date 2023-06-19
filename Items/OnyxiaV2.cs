@@ -13,7 +13,7 @@ namespace TestMod.Items //Directory! Modname.FolderName
 	{
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("OnyxiaV2"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
+			DisplayName.SetDefault("OnyxiaV2"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
 			Tooltip.SetDefault("Better than the Original!");
 		}
 
@@ -29,13 +29,13 @@ namespace TestMod.Items //Directory! Modname.FolderName
 
 			Item.noMelee = true;
 
-			Item.useTime = 20;		//Fire Rate of The Weapon
-			Item.useAnimation = 20; //Animation is 20 ticks long 
+			Item.useTime = 10;		//Fire Rate of The Weapon
+			Item.useAnimation = 10; //Animation is 20 ticks long 
 
-			Item.useStyle = 5;	//Guns and Ranger Weapons use Use Style Id 5!
+			Item.useStyle = 5;	//If the weapon should be held like a ranged weapon or swinged like a sword or used like a flail?
 
-			Item.knockBack = 6; 
-			Item.value = Item.buyPrice(gold: 20); //Now its in Gold Coins
+			Item.knockBack = 6; //Knockback against enemies
+			Item.value = Item.buyPrice(gold: 20); //Sell Base Value
 
 
 			Item.rare = ItemRarityID.Blue ;					//Changes the Item Color (The Name)
@@ -52,33 +52,53 @@ namespace TestMod.Items //Directory! Modname.FolderName
 
 
 
-		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)		//This overides the Item.Shoot = ProjectileID.Bullet!!!
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+{
+    int x = 3; // The amount of projectiles that should be shot
+
+    Vector2 offset = velocity * 2;
+    position += offset;
+
+	int Bullet = type;
+
+    Vector2 middleOffset = new Vector2(0, 0);
+    Vector2 upperOffset = new Vector2(0, -2); // Adjusted to spawn 2 pixels above the blackbolt
+    Vector2 lowerOffset = new Vector2(0, 2); // Adjusted to spawn 2 pixels below the blackbolt
+
+    for (var i = 0; i < x; i++)
+    {
+        Vector2 perturbedSpeed;
+
+        if (i == 0) // First projectile, bullet 2 pixels above the blackbolt
         {
-			int x = 2; //The ammount of Projectiles that should be shot
-
-            Vector2 offset = velocity * 3;
-            position += offset;
-            for (var i = 0; i < x; i++)
-            {
-                Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.ToRadians(10 * i));
-                type = ProjectileID.BlackBolt;
-                int newProjectile = Projectile.NewProjectile(Projectile.GetSource_NaturalSpawn(), position, perturbedSpeed, type, damage, knockback, player.whoAmI);
-
-                // Apply the 33% chance to not consume ammo
-                if (Main.rand.NextFloat() > 0.33f)
-                {
-                    Main.projectile[newProjectile].noDropItem = false;
-                }
-            }
-            return false;
+            perturbedSpeed = velocity;
+            perturbedSpeed += upperOffset;
         }
 
+		else if (i == 1) // Second projectile, blackbolt in the middle
+        {
+            perturbedSpeed = velocity;
+            type = ProjectileID.BlackBolt;
+        }
+        
+        else // Third projectile, bullet 2 pixels below the blackbolt
+        {
+            perturbedSpeed = velocity;
+            perturbedSpeed += lowerOffset;
 
-
-
-
+			type = Bullet;
+        }
 
 		
+
+        int newProjectile = Projectile.NewProjectile(Projectile.GetSource_NaturalSpawn(), position, perturbedSpeed, type, damage, knockback, player.whoAmI);
+    }
+
+    return false;
+}
+
+
+
 		public override void AddRecipes()			//Crafting recipe!
 		{
 			Recipe recipe = CreateRecipe();
