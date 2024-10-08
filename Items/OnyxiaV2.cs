@@ -30,21 +30,31 @@ namespace TestMod.Items //Directory : Modname.Foldername
 			Item.shootSpeed = 15f;	//Shoot Speed in tooltip Description
 			Item.useAnimation = 10;	//Animation duration
 
-			Item.useStyle = 5;	//Item use style (Should it swing , hold or swing it like a flail?) ID 5 is used for ranged weapons!
+			// Item use style (Should it swing , hold or swing it like a flail?) ID 5 is used for ranged weapons!
+			Item.useStyle = 5;
+			
+			// Knockback modifier
+			Item.knockBack = 5;
 
-			Item.knockBack = 5; //How much knockback should it do?
+			// Base sell price
+			Item.value = Item.buyPrice(gold: 10);
 
-			Item.value = Item.buyPrice(gold: 10); //	Sell / buy price
+			// Changes the item rarity color
+			Item.rare = ItemRarityID.Master; 
 
-			Item.rare = ItemRarityID.Master; // Changes the item tag color to the flashing red and yellow item tag for relics from Master Mode
+			//Auto shooting enabled
+			Item.autoReuse = true; 	
 
-			Item.autoReuse = true; 	//AutoSwing enabled
+			// Play shotgun sound when shot
+			Item.UseSound = SoundID.Item1; 
 
-			Item.UseSound = SoundID.Item1; // Play shotgun sound when shot
-
+			// Ammo it should consume
 			Item.useAmmo = AmmoID.Bullet;
-
-			Item.shoot = ProjectileID.Bullet;		//Projectile that gets shot (We will be overiding this) 
+			
+			// Note for ProjectileID.Bullet , This uses the bullet type in your inventory
+			
+			// The projectile it should shoot
+			Item.shoot = ProjectileID.Bullet; 
 		}
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -101,7 +111,7 @@ namespace TestMod.Items //Directory : Modname.Foldername
 
 
 			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			recipe.Register(); // Adds the Recipe to the game
 		}
 	}
 }
