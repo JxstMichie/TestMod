@@ -1,1 +1,12 @@
-FollowNatalieMichie is a pretty cool mod, it does...this. Modify this file with a description of your mod.
+This is the Mod description for this example mod , edit it as you please
+==========================================================================
+
+            _,'|             _.-''``-...___..--';)
+           /_ \'.      __..-' ,      ,--...--'''
+          <\    .`--'''       `     /'
+           `-';'               ;   ; ;
+     __...--''     ___...--_..'  .;.'
+    (,__....----'''       (,..--''  
+
+Kit the cat
+==========================================================================
