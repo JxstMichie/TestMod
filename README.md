@@ -5,3 +5,5 @@ shooting mechanics. I might remake the video in the future but for now its delis
 
 The code is free & open source no strings attached, no credits needed. I hope this can
 guide you even if its only 1 step to your goal
+
+Assets are not desinged or owned by me all rights are reserved to the Calamity mod team
